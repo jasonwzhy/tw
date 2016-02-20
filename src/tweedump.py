@@ -1,5 +1,7 @@
 import tweepy
 import json
+import time
+
 class DoAuth(object):
 	"""docstring for ClassName"""
 	def __init__(self):
@@ -66,6 +68,7 @@ if __name__ == '__main__':
 	# 	print item
 
 	for page in tweepy.Cursor(api.followers,id=203829129).pages():
+		time.sleep(1)
 		print page
 
 	# public_tweets = api.home_timeline()
