@@ -59,13 +59,16 @@ if __name__ == '__main__':
 	# 	page += 1 
 	
 	###### new cursor way
-	for status in tweepy.Cursor(api.user_timeline).items(): #pages() #items(300)  #pages(3)
-		print status
+	# for status in tweepy.Cursor(api.user_timeline).items(): #pages() #items(300)  #pages(3)
+	# 	print status
 
 	# for item in tweepy.Cursor(api.followers,id=203829129).items():
 	# 	print item
 
-		
+	for page in tweepy.Cursor(api.followers,id=203829129).pages():
+    # page is a list of statuses
+    	print page
+
 	# public_tweets = api.home_timeline()
 	# for item in public_tweets:
 	# 	print item
