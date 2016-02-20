@@ -66,10 +66,12 @@ if __name__ == '__main__':
 
 	# for item in tweepy.Cursor(api.followers,id=203829129).items():
 	# 	print item
-
+	loop = 0
 	for page in tweepy.Cursor(api.followers,id=203829129).pages():
-		time.sleep(1)
+		time.sleep(10)
+		loop += 1
 		print page
+		print "loop:",loop
 
 	# public_tweets = api.home_timeline()
 	# for item in public_tweets:
