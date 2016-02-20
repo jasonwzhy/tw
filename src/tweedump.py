@@ -66,8 +66,7 @@ if __name__ == '__main__':
 	# 	print item
 
 	for page in tweepy.Cursor(api.followers,id=203829129).pages():
-    # page is a list of statuses
-    	print page
+		print page
 
 	# public_tweets = api.home_timeline()
 	# for item in public_tweets:
