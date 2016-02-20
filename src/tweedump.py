@@ -48,19 +48,19 @@ if __name__ == '__main__':
 	api = doauth.doapi(auth)
 
 	### old way
-	page = 1
-	while True:
-		statuses = api.user_timeline(page=page)
-		if statuses:
-			for status in statuses:
-				print status
-		else:
-			break
-		page += 1 
+	# page = 1
+	# while True:
+	# 	statuses = api.user_timeline(page=page)
+	# 	if statuses:
+	# 		for status in statuses:
+	# 			print status
+	# 	else:
+	# 		break
+	# 	page += 1 
 	
 	###### new cursor way
-	# for status in tweepy.Cursor(api.user_timeline).items(): #pages() #items(300)  #pages(3)
-	# 	print status
+	for status in tweepy.Cursor(api.user_timeline).items(): #pages() #items(300)  #pages(3)
+		print status
 
 	# for item in tweepy.Cursor(api.followers,id=203829129).items():
 	# 	print item
