@@ -156,7 +156,7 @@ if __name__ == '__main__':
 			print "On Page status len :",len(page)
 			for item in page:
 				create_dtlst.append(item["created_at"])
-		print created_dtlst
+		print create_dtlst
 	testStatus()
 
 	### old way
