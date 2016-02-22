@@ -67,7 +67,7 @@ if __name__ == '__main__':
 	# for item in tweepy.Cursor(api.followers,id=203829129).items():
 	# 	print item
 	loop = 0
-	for page in tweepy.Cursor(api.followers,id=203829129).pages():
+	for page in tweepy.Cursor(api.followers,id=203829129,page=10).pages():
 		time.sleep(61)
 		loop += 1
 		print page
