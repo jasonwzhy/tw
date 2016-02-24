@@ -5,7 +5,7 @@ import tweecore
 from tweecore import DoAuth, UserObj, SearchUser, Status
 import boto3
 import json
-
+import decimal
 
 # Must config the Access Keys & Region first
 # Configure the Access Keys
@@ -26,6 +26,7 @@ class InitDynamoDB():
 
 	def _serialization(self,mapdata):
 		tmpmap = {}
+		mapdata = json.loads(json.dumps(mapdata), parse_float=decimal.Decimal)
 		for k,v in mapdata.items():
 			if v == "":
 				tmpmap[k] = None
