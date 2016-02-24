@@ -94,7 +94,7 @@ if __name__ == '__main__':
 	user = UserObj(api,203829129)
 
 	uinfo = user.get_user_info()
-	tb.put_item(Item=uinfo._json)
+	tb.put_item(Item=uinfo)
 
 	# tbusr.putdata(mydic)
 	# tb = InitDynamoDB("Music")
