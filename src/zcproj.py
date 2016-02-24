@@ -1,5 +1,5 @@
 import tweecore
-from tweecore import DoAuth UserObj SearchUser Status
+from tweecore import DoAuth, UserObj, SearchUser, Status
 import boto3
 import json
 
