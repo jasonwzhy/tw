@@ -73,6 +73,8 @@ def procstatus(table,api,uid):
 
 if __name__ == '__main__':
 	# dosync_twee()
-	tb = InitDynamoDB("Muisc")
+	# tb = InitDynamoDB("Muisc")
+	dynamodb = boto3.resource('dynamodb')
+	tb = dynamodb.Table("Muisc")
 	myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
-	tb.putdata(myd)
+	tb.put_item(myd)
