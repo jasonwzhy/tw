@@ -39,6 +39,10 @@ def dosync_twee():
 
 		uinfo = user.get_user_info()
 		uinfo["seed"] = True
+		print uinfo
+		print type(uinfo)
+		exit()
+		
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
 
