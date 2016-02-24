@@ -22,12 +22,15 @@ class InitDynamoDB():
 		# 	itemdata = self._serialization(data)
 		# else:
 		# 	return -1
-		self.tb.put_item(Item=data)
-		
+		self.tb.put_item(Item=_serialization(self,data))
+
 	def _serialization(self,mapdata):
 		tmpmap = {}
 		for k,v in mapdata.items():
-			tmpmap[k] = v
+			if v == "":
+				tmpmap[k] = None
+			else:
+				tmpmap[k] = v
 		return tmpmap
 
 
