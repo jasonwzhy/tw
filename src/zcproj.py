@@ -25,7 +25,7 @@ class InitDynamoDB():
 		lo = 0
 		for k,v in mapdata.items():
 			lo += 1
-			tmpmap[k] = mapdata[k]
+			tmpmap[k] = "fdsafdafa"
 			if lo > 7:
 				break
 		return tmpmap
