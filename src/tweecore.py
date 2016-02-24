@@ -50,6 +50,7 @@ class UserObj():
 			self.userobj = self.twapi.get_user(self.uid)
 		else:
 			self.userobj = self.twapi.get_user(self.uname)
+		return self._processret(self.userobj)
 
 	def get_followers_page(self):
 		for page in tweepy.Cursor(self.twapi.followers,id=self.uid).pages():
@@ -95,7 +96,7 @@ class UserObj():
 		elif tag == 2:
 			return self.friendsid
 		elif tag == 0:
-			return {"follows":self.followersidlst,"friends":self.friendsid}
+			return {"id":self.uid,"follows":self.followersidlst,"friends":self.friendsid}
 
 
 class SearchUser():
@@ -157,7 +158,7 @@ if __name__ == '__main__':
 			for item in page:
 				create_dtlst.append(item["created_at"])
 		print create_dtlst
-	testStatus()
+	# testStatus()
 
 	### old way
 	# page = 1
@@ -200,7 +201,7 @@ if __name__ == '__main__':
 	# public_tweets = api.home_timeline()
 	# for item in public_tweets:
 	# 	print item
-	# uobj = UserObj(api,uid = 203829129)
-	# uobj.get_user_info()
+	uobj = UserObj(api,uid = 203829129)
+	print uobj.get_user_info()
 
 # api.xxx()
