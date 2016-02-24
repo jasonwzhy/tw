@@ -22,8 +22,12 @@ class InitDynamoDB():
 		self.tb.put_item(Item=itemdata)
 	def _serialization(self,mapdata):
 		tmpmap = {}
+		lo = 0
 		for k,v in mapdata.items():
+			lo += 1
 			tmpmap[k] = mapdata[k]
+			if lo > 7:
+				break
 		return tmpmap
 
 
@@ -48,7 +52,7 @@ def dosync_twee():
 		# del(uinfo["status"])
 		# for k,v in uinfo.items():
 		# 	print k , " : ", v
-
+		uinfo["id"]=123123123
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
 
