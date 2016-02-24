@@ -27,7 +27,7 @@ class InitDynamoDB():
 		tmpmap = {}
 		for k,v in mapdata.items():
 			tmpmap[k] = v
-			print k,"-",type(v)," : ",v
+			print k,"-",type(v)," : ",v,"\n"
 		return tmpmap
 
 
