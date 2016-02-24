@@ -5,7 +5,7 @@ import tweepy
 import json
 import time
 
-__DEBUG__ = True
+__DEBUG__ = False
 
 class DoAuth(object):
 	"""docstring for ClassName"""
