@@ -33,6 +33,8 @@ class InitDynamoDB():
 				tmpmap[k] = str(v)
 			else:
 				tmpmap[k] = v
+		for ki,vi in tmpmap.items():
+			print ki,type(ki),"--",vi,type(vi),"\n\n\n\n"
 		return tmpmap
 
 
@@ -51,7 +53,7 @@ def dosync_twee():
 
 	for seedusr in SeedLst:
 		user = UserObj(api,seedusr)
-
+		item["seed"] = True
 		uinfo = user.get_user_info()
 		tbusr.putdata(uinfo)
 		# procstatus(tbstat,api,seedusr)
