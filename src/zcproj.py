@@ -30,7 +30,7 @@ def dosync_twee():
 	tbstat = InitDynamoDB("Tweestatus")
 	tbrel = InitDynamoDB("TweeRel")
 	
-	auth = DoAuth()
+	doauth = DoAuth()
 	auth = doauth.doauth()
 	api  = doauth.doapi(auth)
 
