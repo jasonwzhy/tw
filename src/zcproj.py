@@ -60,15 +60,15 @@ def dosync_twee():
 	api  = doauth.doapi(auth)
 
 	for seedusr in SeedLst:
-		try:
-			user = UserObj(api,seedusr)
-			uinfo = user.get_user_info()
+		user = UserObj(api,seedusr)
+		uinfo = user.get_user_info()
 
-			uinfo["seed"] = True
-			tbusr.putdata(uinfo)
+		uinfo["seed"] = True
+		tbusr.putdata(uinfo)
+		try:
 			procstatus(tbstat,api,seedusr)
 		except:
-        	continue
+			continue
 
 
 		for pagedata in user.get_followers_page():
