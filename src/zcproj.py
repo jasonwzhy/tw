@@ -85,7 +85,17 @@ def procstatus(table,api,uid):
 
 
 if __name__ == '__main__':
-	dosync_twee()
+	# dosync_twee()
+	dynamodb = boto3.resource('dynamodb')
+	tb = dynamodb.Table("TweeUsers")
+	doauth = DoAuth()
+	auth = doauth.doauth()
+	api  = doauth.doapi(auth)
+	user = UserObj(api,seedusr)
+
+	uinfo = user.get_user_info()
+	tb.put_item(Item=uinfo._json)
+
 	# tbusr.putdata(mydic)
 	# tb = InitDynamoDB("Music")
 	# myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
