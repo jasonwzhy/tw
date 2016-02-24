@@ -31,8 +31,10 @@ class InitDynamoDB():
 			jdump = jdump.replace('""',"null")
 		elif '' in jdump:
 			jdump = jdump.replace("''","null")
-
-		mapdata = json.loads(jdump, parse_float=decimal.Decimal)
+		try:
+			mapdata = json.loads(jdump, parse_float=decimal.Decimal)
+		except:
+			continue
 		for k,v in mapdata.items():
 			if v == "":
 				tmpmap[k] = None
@@ -58,25 +60,34 @@ def dosync_twee():
 	api  = doauth.doapi(auth)
 
 	for seedusr in SeedLst:
-		user = UserObj(api,seedusr)
-		uinfo = user.get_user_info()
+		try:
+			user = UserObj(api,seedusr)
+			uinfo = user.get_user_info()
 
-		uinfo["seed"] = True
-		tbusr.putdata(uinfo)
-		procstatus(tbstat,api,seedusr)
+			uinfo["seed"] = True
+			tbusr.putdata(uinfo)
+			procstatus(tbstat,api,seedusr)
+		except:
+        	continue
 
 
 		for pagedata in user.get_followers_page():
 			for item in pagedata:
-				item["seed"] = False
-				tbusr.putdata(item)
-				procstatus(tbstat,api,item["id"])
+				try:
+					item["seed"] = False
+					tbusr.putdata(item)
+					procstatus(tbstat,api,item["id"])
+				except:
+					continue
 		
 		for pagedata in user.get_friends_page():
 			for item in pagedata:
-				item["seed"] = False
-				tbusr.putdata(item)
-				procstatus(tbstat,api,item["id"])
+				try:
+					item["seed"] = False
+					tbusr.putdata(item)
+					procstatus(tbstat,api,item["id"])
+				except:
+					continue
 
 		tbrel.putdata(user.show_relids())
 
@@ -84,11 +95,24 @@ def dosync_twee():
 def procstatus(table,api,uid):
 	status = Status(api,uid)
 	for statuspage in status.get_status_page():
-		for item in statuspage:
-			# print item
-			item["userid"] = uid
-			item["created_at_ts"] = 0
-			table.putdata(item)
+		try:
+			for item in statuspage:
+				# print item
+				item["userid"] = uid
+
+				#Wed Feb 24 13:15:59 +0000 2016
+				try:
+					if "created_at" in itme:
+						if itme["created_at"] != None or itme["created_at"] != "":
+							timestr = item["created_at"]
+							dt = datetime.strptime(timestr, '%a %b %d %X  %Y')
+							ts = int(time.mktime(dt.timetuple()))
+							item["created_at_ts"] = ts
+				except:
+					continue
+				table.putdata(item)
+		except:
+			continue
 
 
 
