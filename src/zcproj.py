@@ -29,6 +29,8 @@ class InitDynamoDB():
 		for k,v in mapdata.items():
 			if v == "":
 				tmpmap[k] = None
+			elif isinstance(v, float):
+				tmpmap[k] = str(v)
 			else:
 				tmpmap[k] = v
 		return tmpmap
