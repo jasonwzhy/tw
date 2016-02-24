@@ -91,7 +91,7 @@ if __name__ == '__main__':
 	doauth = DoAuth()
 	auth = doauth.doauth()
 	api  = doauth.doapi(auth)
-	user = UserObj(api,seedusr)
+	user = UserObj(api,203829129)
 
 	uinfo = user.get_user_info()
 	tb.put_item(Item=uinfo._json)
