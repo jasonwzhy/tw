@@ -26,11 +26,14 @@ class InitDynamoDB():
 	def _serialization(self,mapdata):
 		tmpmap = {}
 		lo = 0
+		klst=[]
 		for k,v in mapdata.items():
 			lo += 1
+			klst.append(k)
 			tmpmap[k] = v
 			print k,"-",type(v)," : ",v,"\n"
 		print "----lo: %d-----------------------------------------------------------------------------------------------------"%lo
+		print "key list: ", klst
 		return tmpmap
 
 
