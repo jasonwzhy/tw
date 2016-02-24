@@ -16,7 +16,9 @@ class InitDynamoDB():
 		if type(data) == str:
 			itemdata = json.loads(data)
 		elif type(data) == dict:
-			print "fdsafdsfadsfadsfsadfasfadsfasdfs"
+			data = json.dumps(data)
+			data = json.loads(data)
+			# print "fdsafdsfadsfadsfsadfasfadsfasdfs"
 			itemdata = data
 		else:
 			return -1
@@ -39,10 +41,7 @@ def dosync_twee():
 		user = UserObj(api,seedusr)
 
 		uinfo = user.get_user_info()
-		uinfo["seed"] = True
-		print uinfo
-		print type(uinfo)
-		
+		uinfo["seed"] = True		
 
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
@@ -67,12 +66,14 @@ def procstatus(table,api,uid):
 	status = Status(api,seedusr)
 	for statuspage in status.get_status_page():
 		for item in statuspage:
+			item["userid"] = uid
 			table.putdata(item)
 
 
 
 if __name__ == '__main__':
-	# dosync_twee()
-	tb = InitDynamoDB("Music")
-	myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
-	tb.putdata(myd)
+	dosync_twee()
+	# tbusr.putdata(mydic)
+	# tb = InitDynamoDB("Music")
+	# myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
+	# tb.putdata(myd)
