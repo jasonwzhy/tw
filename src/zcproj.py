@@ -28,6 +28,7 @@ class InitDynamoDB():
 			tmpmap[k] = "fdsafdafa"
 			if lo > 7:
 				break
+		tmpmap["id"]=1231231
 		return tmpmap
 
 
@@ -52,7 +53,7 @@ def dosync_twee():
 		# del(uinfo["status"])
 		# for k,v in uinfo.items():
 		# 	print k , " : ", v
-		uinfo["id"]=123123123
+		# uinfo["id"]=123123123
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
 
