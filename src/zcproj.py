@@ -77,7 +77,7 @@ def procstatus(table,api,uid):
 	status = Status(api,uid)
 	for statuspage in status.get_status_page():
 		for item in statuspage:
-			print item
+			# print item
 			item["userid"] = uid
 			item["created_at_ts"] = 0
 			table.putdata(item)
