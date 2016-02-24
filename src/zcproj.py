@@ -13,13 +13,14 @@ class InitDynamoDB():
 		dynamodb = boto3.resource('dynamodb')
 		self.tb = dynamodb.Table(tables)
 	def putdata(self,data):
-		if type(data) == str:
-			itemdata = json.loads(data)
-		elif type(data) == dict:
-			itemdata = data
-		else:
-			return -1
-		self.tb.put_item(Item=itemdata)
+		# if type(data) == str:
+		# 	itemdata = json.loads(data)
+		# elif type(data) == dict:
+		# 	print "fdsafdsfadsfadsfsadfasfadsfasdfs"
+		# 	itemdata = data
+		# else:
+		# 	return -1
+		self.tb.put_item(Item={"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"})
 
 # class GetuserwithSid():
 # 	def __init__(self):
@@ -41,8 +42,8 @@ def dosync_twee():
 		uinfo["seed"] = True
 		print uinfo
 		print type(uinfo)
-		exit()
 		
+
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
 
@@ -71,4 +72,7 @@ def procstatus(table,api,uid):
 
 
 if __name__ == '__main__':
-	dosync_twee()
+	# dosync_twee()
+	tb = InitDynamoDB("Muisc")
+	myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
+	tb.putdata(myd)
