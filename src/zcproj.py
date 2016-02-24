@@ -41,7 +41,10 @@ def dosync_twee():
 		user = UserObj(api,seedusr)
 
 		uinfo = user.get_user_info()
-		uinfo["seed"] = True		
+		uinfo["seed"] = True
+		# del(uinfo["entities"])
+		# for k,v in uinfo.items():
+		# 	print k , " : ", v
 
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
@@ -63,7 +66,7 @@ def dosync_twee():
 
 
 def procstatus(table,api,uid):
-	status = Status(api,seedusr)
+	status = Status(api,uid)
 	for statuspage in status.get_status_page():
 		for item in statuspage:
 			item["userid"] = uid

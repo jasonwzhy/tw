@@ -76,10 +76,14 @@ class UserObj():
 
 	def _processret(self,item):
 		ret = {}
-		for key in item.__dict__:
-			ret[key] = item.__dict__[key]
-		# self.followersidlst.append(item.__dict__["id"])	
-		return ret
+		# for key in item.__dict__:
+			# print type(item.__dict__[key])
+			# print key," : ",item.__dict__[key],"\n\n\n\n"
+			# ret[key] = item.__dict__[key]
+			# self.followersidlst.append(item.__dict__["id"])	
+		# return ret
+		return item._json
+		# return json.loads(json.dumps(item._json))
 
 	def _append_lst(self,source,slst):
 		if source == self.FOLLOW: #follow
@@ -127,9 +131,10 @@ class Status():
 
 	def _processret(self,item):
 		ret = {}
-		for key in item.__dict__:
-			ret[key] = item.__dict__[key]
-		return ret
+		# for key in item.__dict__:
+		# 	ret[key] = item.__dict__[key]
+		# return ret
+		return item._json
 
 ######    test...
 if __name__ == '__main__':
@@ -202,6 +207,6 @@ if __name__ == '__main__':
 	# for item in public_tweets:
 	# 	print item
 	uobj = UserObj(api,uid = 203829129)
-	print uobj.get_user_info()
+	uobj.get_user_info()
 
 # api.xxx()
