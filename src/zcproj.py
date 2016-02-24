@@ -77,4 +77,4 @@ if __name__ == '__main__':
 	dynamodb = boto3.resource('dynamodb')
 	tb = dynamodb.Table("Muisc")
 	myd = {"fdsa":"fdsa","id":312,"Artist":"fdsfads","SongTitle":"fdsafds"}
-	tb.put_item(myd)
+	tb.put_item(Item=myd)
