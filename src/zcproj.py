@@ -26,7 +26,13 @@ class InitDynamoDB():
 
 	def _serialization(self,mapdata):
 		tmpmap = {}
-		mapdata = json.loads(json.dumps(mapdata), parse_float=decimal.Decimal)
+		jdump = json.dumps(mapdata)
+		if "" in jdump:
+			jdump = jdump.replace('""',jdump)
+		elif '' in jdump:
+			jdump = jdump.replace("''",jdump)
+
+		mapdata = json.loads(jdump, parse_float=decimal.Decimal)
 		for k,v in mapdata.items():
 			if v == "":
 				tmpmap[k] = None
