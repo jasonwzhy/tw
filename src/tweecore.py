@@ -145,25 +145,25 @@ if __name__ == '__main__':
 	auth = doauth.doauth()
 	api = doauth.doapi(auth)
 
-	def testUserObj():
-		user = UserObj(api,2875746901)
-		for page in user.get_followers_page():
-			print "One page followers len:",len(page),"\n\n\n\n\n"
+	# def testUserObj():
+	# 	user = UserObj(api,2875746901)
+	# 	for page in user.get_followers_page():
+	# 		print "One page followers len:",len(page),"\n\n\n\n\n"
 
 
-		for page in user.get_friends_page():
-			print "One page friends len:",len(page),"\n\n\n\n\n"
+	# 	for page in user.get_friends_page():
+	# 		print "One page friends len:",len(page),"\n\n\n\n\n"
 
-		print user.show_relids(0)
-		print "follows len:",len(user.show_relids(1)),"  friends len:",len(user.show_relids(2))
-	def testStatus():
-		status = Status(api,2875746901)
-		create_dtlst = []
-		for page in status.get_status_page():
-			print "On Page status len :",len(page)
-			for item in page:
-				create_dtlst.append(item["created_at"])
-		print create_dtlst
+	# 	print user.show_relids(0)
+	# 	print "follows len:",len(user.show_relids(1)),"  friends len:",len(user.show_relids(2))
+	# def testStatus():
+	# 	status = Status(api,2875746901)
+	# 	create_dtlst = []
+	# 	for page in status.get_status_page():
+	# 		print "On Page status len :",len(page)
+	# 		for item in page:
+	# 			create_dtlst.append(item["created_at"])
+	# 	print create_dtlst
 	# testStatus()
 
 	### old way
