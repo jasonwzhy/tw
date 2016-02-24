@@ -25,9 +25,12 @@ class InitDynamoDB():
 		self.tb.put_item(Item=self._serialization(data))
 	def _serialization(self,mapdata):
 		tmpmap = {}
+		lo = 0
 		for k,v in mapdata.items():
+			lo += 1
 			tmpmap[k] = v
 			print k,"-",type(v)," : ",v,"\n"
+		print "----lo: %d-----------------------------------------------------------------------------------------------------"%lo
 		return tmpmap
 
 
