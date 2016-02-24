@@ -134,6 +134,7 @@ class Status():
 		# for key in item.__dict__:
 		# 	ret[key] = item.__dict__[key]
 		# return ret
+		# %a %b %c %Y
 		return item._json
 
 ######    test...

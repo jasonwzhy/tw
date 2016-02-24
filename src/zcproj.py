@@ -14,15 +14,18 @@ class InitDynamoDB():
 		self.tb = dynamodb.Table(tables)
 	def putdata(self,data):
 		if type(data) == str:
-			itemdata = json.loads(data)
+			itemdata = _serialization(json.loads(data))
 		elif type(data) == dict:
-			data = json.dumps(data)
-			data = json.loads(data)
-			# print "fdsafdsfadsfadsfsadfasfadsfasdfs"
-			itemdata = data
+			itemdata = _serialization(data)
 		else:
 			return -1
 		self.tb.put_item(Item=itemdata)
+	def _serialization(self,mapdata):
+		tmpmap = {}
+		for k,v in mapdata.items():
+			tmpmap[k] = v
+		return tmpmap
+
 
 # class GetuserwithSid():
 # 	def __init__(self):
@@ -69,6 +72,7 @@ def procstatus(table,api,uid):
 	status = Status(api,uid)
 	for statuspage in status.get_status_page():
 		for item in statuspage:
+			print item
 			item["userid"] = uid
 			item["created_at_ts"] = 0
 			table.putdata(item)
