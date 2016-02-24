@@ -22,18 +22,12 @@ class InitDynamoDB():
 		# 	itemdata = self._serialization(data)
 		# else:
 		# 	return -1
-		self.tb.put_item(Item=self._serialization(data))
+		self.tb.put_item(Item=data)
+		
 	def _serialization(self,mapdata):
 		tmpmap = {}
-		lo = 0
-		klst=[]
 		for k,v in mapdata.items():
-			lo += 1
-			klst.append(k)
 			tmpmap[k] = v
-			print k,"-",type(v)," : ",v,"\n"
-		print "----lo: %d-----------------------------------------------------------------------------------------------------"%lo
-		print "key list: ", klst
 		return tmpmap
 
 
@@ -54,27 +48,21 @@ def dosync_twee():
 		user = UserObj(api,seedusr)
 
 		uinfo = user.get_user_info()
-		# uinfo["seed"] = True
-		del(uinfo["status"])
-		del(uinfo["entities"])
-		# for k,v in uinfo.items():
-		# 	print k , " : ", v
-		# uinfo["id"]=123123123
 		tbusr.putdata(uinfo)
-		procstatus(tbstat,api,seedusr)
+		# procstatus(tbstat,api,seedusr)
 
 
 		for pagedata in user.get_followers_page():
 			for item in pagedata:
 				item["seed"] = False
 				tbusr.putdata(item)
-				procstatus(tbstat,api,item["id"])
+				# procstatus(tbstat,api,item["id"])
 		
 		for pagedata in user.get_friends_page():
 			for item in pagedata:
 				item["seed"] = False
 				tbusr.putdata(item)
-				procstatus(tbstat,api,item["id"])
+				# procstatus(tbstat,api,item["id"])
 
 		tbrel.putdata(user.show_relids())
 
