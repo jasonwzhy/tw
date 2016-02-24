@@ -53,8 +53,9 @@ def dosync_twee():
 
 	for seedusr in SeedLst:
 		user = UserObj(api,seedusr)
-		item["seed"] = True
 		uinfo = user.get_user_info()
+
+		uinfo["seed"] = True
 		tbusr.putdata(uinfo)
 		# procstatus(tbstat,api,seedusr)
 
