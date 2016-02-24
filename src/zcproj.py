@@ -14,9 +14,9 @@ class InitDynamoDB():
 		self.tb = dynamodb.Table(tables)
 	def putdata(self,data):
 		if type(data) == str:
-			itemdata = _serialization(json.loads(data))
+			itemdata = self._serialization(json.loads(data))
 		elif type(data) == dict:
-			itemdata = _serialization(data)
+			itemdata = self._serialization(data)
 		else:
 			return -1
 		self.tb.put_item(Item=itemdata)
