@@ -22,7 +22,7 @@ class InitDynamoDB():
 		# 	itemdata = self._serialization(data)
 		# else:
 		# 	return -1
-		self.tb.put_item(Item=_serialization(self,data))
+		self.tb.put_item(Item=self._serialization(self,data))
 
 	def _serialization(self,mapdata):
 		tmpmap = {}
