@@ -1,3 +1,6 @@
+#!usr/bin/python
+#coding=utf-8
+
 import tweecore
 from tweecore import DoAuth, UserObj, SearchUser, Status
 import boto3
@@ -13,22 +16,17 @@ class InitDynamoDB():
 		dynamodb = boto3.resource('dynamodb')
 		self.tb = dynamodb.Table(tables)
 	def putdata(self,data):
-		if type(data) == str:
-			itemdata = self._serialization(json.loads(data))
-		elif type(data) == dict:
-			itemdata = self._serialization(data)
-		else:
-			return -1
+		# if type(data) == str:
+		# 	itemdata = self._serialization(json.loads(data))
+		# elif type(data) == dict:
+		# 	itemdata = self._serialization(data)
+		# else:
+		# 	return -1
 		self.tb.put_item(Item=itemdata)
 	def _serialization(self,mapdata):
 		tmpmap = {}
-		lo = 0
 		for k,v in mapdata.items():
-			lo += 1
-			tmpmap[k] = "fdsafdafa"
-			if lo > 7:
-				break
-		tmpmap["id"]=1231231
+			tmpmap[k] = v
 		return tmpmap
 
 
@@ -50,7 +48,8 @@ def dosync_twee():
 
 		uinfo = user.get_user_info()
 		# uinfo["seed"] = True
-		# del(uinfo["status"])
+		del(uinfo["status"])
+		del(uinfo["entities"])
 		# for k,v in uinfo.items():
 		# 	print k , " : ", v
 		# uinfo["id"]=123123123
@@ -85,16 +84,8 @@ def procstatus(table,api,uid):
 
 
 if __name__ == '__main__':
-	# dosync_twee()
-	dynamodb = boto3.resource('dynamodb')
-	tb = dynamodb.Table("TweeUsers")
-	doauth = DoAuth()
-	auth = doauth.doauth()
-	api  = doauth.doapi(auth)
-	user = UserObj(api,203829129)
+	dosync_twee()
 
-	uinfo = user.get_user_info()
-	tb.put_item(Item=uinfo)
 
 	# tbusr.putdata(mydic)
 	# tb = InitDynamoDB("Music")
