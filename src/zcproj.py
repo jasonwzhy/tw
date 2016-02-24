@@ -57,20 +57,20 @@ def dosync_twee():
 
 		uinfo["seed"] = True
 		tbusr.putdata(uinfo)
-		# procstatus(tbstat,api,seedusr)
+		procstatus(tbstat,api,seedusr)
 
 
 		for pagedata in user.get_followers_page():
 			for item in pagedata:
 				item["seed"] = False
 				tbusr.putdata(item)
-				# procstatus(tbstat,api,item["id"])
+				procstatus(tbstat,api,item["id"])
 		
 		for pagedata in user.get_friends_page():
 			for item in pagedata:
 				item["seed"] = False
 				tbusr.putdata(item)
-				# procstatus(tbstat,api,item["id"])
+				procstatus(tbstat,api,item["id"])
 
 		tbrel.putdata(user.show_relids())
 
