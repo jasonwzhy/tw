@@ -28,9 +28,9 @@ class InitDynamoDB():
 		tmpmap = {}
 		jdump = json.dumps(mapdata)
 		if "" in jdump:
-			jdump = jdump.replace('""',jdump)
+			jdump = jdump.replace('""',"null")
 		elif '' in jdump:
-			jdump = jdump.replace("''",jdump)
+			jdump = jdump.replace("''","null")
 
 		mapdata = json.loads(jdump, parse_float=decimal.Decimal)
 		for k,v in mapdata.items():
