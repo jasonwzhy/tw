@@ -12,7 +12,7 @@ class InitDynamoDB():
 	def __init__(self,tables):
 		dynamodb = boto3.resource('dynamodb')
 		self.tb = dynamodb.Table(tables)
-	def put(self,data):
+	def putdata(self,data):
 		if type(data) == str:
 			itemdata = json.loads(data)
 		elif type(data) == dict:
@@ -39,30 +39,30 @@ def dosync_twee():
 
 		uinfo = user.get_user_info()
 		uinfo["seed"] = True
-		tbusr.put(uinfo)
+		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
 
 
 		for pagedata in user.get_followers_page():
 			for item in pagedata:
 				item["seed"] = False
-				tbusr.put(item)
+				tbusr.putdata(item)
 				procstatus(tbstat,api,item["id"])
 		
 		for pagedata in user.get_friends_page():
 			for item in pagedata:
 				item["seed"] = False
-				tbusr.put(item)
+				tbusr.putdata(item)
 				procstatus(tbstat,api,item["id"])
 
-		tbrel.put(user.show_relids())
+		tbrel.putdata(user.show_relids())
 
 
 def procstatus(table,api,uid):
 	status = Status(api,seedusr)
 	for statuspage in status.get_status_page():
 		for item in statuspage:
-			table.put(item)
+			table.putdata(item)
 
 
 
