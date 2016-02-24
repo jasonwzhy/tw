@@ -31,10 +31,7 @@ class InitDynamoDB():
 			jdump = jdump.replace('""',"null")
 		elif '' in jdump:
 			jdump = jdump.replace("''","null")
-		try:
-			mapdata = json.loads(jdump, parse_float=decimal.Decimal)
-		except:
-			continue
+		mapdata = json.loads(jdump, parse_float=decimal.Decimal)
 		for k,v in mapdata.items():
 			if v == "":
 				tmpmap[k] = None
