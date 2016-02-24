@@ -23,7 +23,7 @@ class InitDynamoDB():
 	def _serialization(self,mapdata):
 		tmpmap = {}
 		for k,v in mapdata.items():
-			tmpmap[k] = v
+			tmpmap[k] = mapdata[k]
 		return tmpmap
 
 
@@ -44,10 +44,10 @@ def dosync_twee():
 		user = UserObj(api,seedusr)
 
 		uinfo = user.get_user_info()
-		uinfo["seed"] = True
-		del(uinfo["status"])
-		for k,v in uinfo.items():
-			print k , " : ", v
+		# uinfo["seed"] = True
+		# del(uinfo["status"])
+		# for k,v in uinfo.items():
+		# 	print k , " : ", v
 
 		tbusr.putdata(uinfo)
 		procstatus(tbstat,api,seedusr)
