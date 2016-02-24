@@ -33,8 +33,7 @@ class InitDynamoDB():
 				tmpmap[k] = str(v)
 			else:
 				tmpmap[k] = v
-		for ki,vi in tmpmap.items():
-			print ki,"--",vi,type(vi),"\n\n\n\n"
+		print tmpmap,"\n\n\n"
 		return tmpmap
 
 
