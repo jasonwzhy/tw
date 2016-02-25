@@ -100,8 +100,8 @@ def procstatus(table,api,uid):
 				item["userid"] = uid
 				#Wed Feb 24 13:15:59 +0000 2016
 				try:
-					if "created_at" in itme:
-						if itme["created_at"] != None or itme["created_at"] != "":
+					if "created_at" in item:
+						if item["created_at"] != None or item["created_at"] != "":
 							timestr = item["created_at"]
 							dt = datetime.strptime(timestr, '%a %b %d %X  %Y')
 							ts = int(time.mktime(dt.timetuple()))
