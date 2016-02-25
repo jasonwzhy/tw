@@ -62,10 +62,9 @@ def dosync_twee():
 
 		uinfo["seed"] = True
 		tbusr.putdata(uinfo)
-		try:
-			procstatus(tbstat,api,seedusr)
-		except:
-			continue
+	
+		procstatus(tbstat,api,seedusr)
+		
 
 
 		for pagedata in user.get_followers_page():
@@ -74,7 +73,8 @@ def dosync_twee():
 					item["seed"] = False
 					tbusr.putdata(item)
 					procstatus(tbstat,api,item["id"])
-				except:
+				except Exception, e:
+					print Exception,e
 					continue
 		
 		for pagedata in user.get_friends_page():
@@ -83,7 +83,8 @@ def dosync_twee():
 					item["seed"] = False
 					tbusr.putdata(item)
 					procstatus(tbstat,api,item["id"])
-				except:
+				except Exception, e:
+					print Exception,e
 					continue
 
 		tbrel.putdata(user.show_relids())
@@ -92,11 +93,9 @@ def dosync_twee():
 def procstatus(table,api,uid):
 	status = Status(api,uid)
 	for statuspage in status.get_status_page():
-		try:
 			for item in statuspage:
 				# print item
 				item["userid"] = uid
-
 				#Wed Feb 24 13:15:59 +0000 2016
 				try:
 					if "created_at" in itme:
@@ -105,11 +104,11 @@ def procstatus(table,api,uid):
 							dt = datetime.strptime(timestr, '%a %b %d %X  %Y')
 							ts = int(time.mktime(dt.timetuple()))
 							item["created_at_ts"] = ts
-				except:
+					table.putdata(item)
+				except Exception, e:
+					print Exception,e
 					continue
-				table.putdata(item)
-		except:
-			continue
+				
 
 
 
