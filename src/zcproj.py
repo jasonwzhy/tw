@@ -103,7 +103,7 @@ def procstatus(table,api,uid):
 					if "created_at" in item:
 						if item["created_at"] != None or item["created_at"] != "":
 							timestr = item["created_at"]
-							dt = datetime.strptime(timestr, '%a %b %d %X  %Y')
+							dt = datetime.strptime(timestr, '%a %b %d %X +0000 %Y')
 							ts = int(time.mktime(dt.timetuple()))
 							item["created_at_ts"] = ts
 					table.putdata(item)
