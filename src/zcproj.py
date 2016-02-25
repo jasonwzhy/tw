@@ -7,7 +7,7 @@ import boto3
 import json
 import decimal
 import time
-import datetime
+from datetime import datetime
 
 # Must config the Access Keys & Region first
 # Configure the Access Keys
