@@ -65,14 +65,14 @@ def dosync_twee():
 		uinfo["seed"] = True
 		tbusr.putdata(uinfo)
 	
-		procstatus(tbstat,api,seedusr)
 		
 
 		if seedusr == 203829129:
 			pagenum = 12
 		else:
 			pagenum = None
-			
+			procstatus(tbstat,api,seedusr)
+
 		for pagedata in user.get_followers_page(pagenum=12):
 			for item in pagedata:
 				try:
