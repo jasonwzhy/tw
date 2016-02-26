@@ -55,7 +55,7 @@ class UserObj():
 			self.userobj = self.twapi.get_user(self.uname)
 		return self._processret(self.userobj)
 
-	def get_followers_page(self.pagenum=None):
+	def get_followers_page(self,pagenum=None):
 		for page in tweepy.Cursor(self.twapi.followers,id=self.uid).pages(pagenum):
 		# return self.api.followers()
 			yield self.process_follow(page)
