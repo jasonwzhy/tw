@@ -22,6 +22,25 @@ class DoAuth(object):
 		return tweepy.API(arg)
 
 
+def retry(times=1,sleep=600,exceptions=None):
+	import time
+	exceptions = exceptions if exceptions is not None else Exception
+	def wrapper(func):
+		def wrapper(*args,**kwargs):
+			last_exception =None
+			for ct in range(times):
+				time.sleep(sleep)
+				try:
+					return func(*args, **kwargs)
+				except exceptions as e:
+					last_exception = e
+					print last_exception
+                    print "retry times:",ct
+			raise last_exception
+		return wrapper
+	return wrapper
+
+
 def CallRatelimit(func):
 	def _deco(s,x):
 		s60s = ["process_follow","process_friend"]
@@ -48,6 +67,8 @@ class UserObj():
 		self.relKey = "id"
 		self.FOLLOW = 1
 		self.FRIEND = 2
+
+	@retry(1000)
 	def get_user_info(self):
 		if self.uname == None:
 			self.userobj = self.twapi.get_user(self.uid)
@@ -55,11 +76,13 @@ class UserObj():
 			self.userobj = self.twapi.get_user(self.uname)
 		return self._processret(self.userobj)
 
+	@retry(1000)
 	def get_followers_page(self):
 		for page in tweepy.Cursor(self.twapi.followers,id=self.uid).pages():
 		# return self.api.followers()
 			yield self.process_follow(page)
-
+	
+	@retry(1000)
 	def get_friends_page(self):
 		for page in tweepy.Cursor(self.twapi.friends,id=self.uid).pages():
 			yield self.process_friend(page)
@@ -120,6 +143,8 @@ class Status():
 	def usr_timeline(self):
 		self.twobj = self.twapi.user_timeline(self.uid)
 		return self.twobj
+	
+	@retry(1000)
 	def get_status_page(self):
 		for page in tweepy.Cursor(self.twapi.user_timeline,id=self.uid).pages():
 			yield self.process_status(page)
