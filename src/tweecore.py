@@ -21,21 +21,20 @@ class DoAuth(object):
 	def doapi(self,arg):
 		return tweepy.API(arg)
 
-
-def retry(times=1,sleep=600,exceptions=None):
+def retry(times=1,sleep=10,exceptions=None):
 	import time
 	exceptions = exceptions if exceptions is not None else Exception
 	def wrapper(func):
 		def wrapper(*args,**kwargs):
 			last_exception =None
 			for ct in range(times):
-				time.sleep(sleep)
 				try:
 					return func(*args, **kwargs)
 				except exceptions as e:
 					last_exception = e
-					print last_exception
-					print "retry times:" , ct
+					print "[Exception]: ",last_exception
+					print "[Retrytimes]: " , ct
+					time.sleep(sleep)
 			raise last_exception
 		return wrapper
 	return wrapper
@@ -47,7 +46,7 @@ def CallRatelimit(func):
 		s30s = ["process_status"]
 		ret = func(s,x)
 		if __DEBUG__:
-			time.sleep(3)
+			time.sleep(1)
 		else:
 			if func.func_name in s30s:
 				time.sleep(30)
