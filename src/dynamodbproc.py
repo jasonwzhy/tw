@@ -32,12 +32,12 @@ def DyDBClient():
     ucount = 0
     fp = open('./outputstatus','w+r')
     for itemiterator in response_iterator:
-        time.sleep(5)
+        time.sleep(10)
         for item in itemiterator['Items']:
             ucount += 1
             dict = {'id':item['id']['N'],'text':item['text']['S'],'userid':item['userid']['N']}
             fp.writelines(json.dumps(dict,ensure_ascii=False)+"\n")
-    print ucount
+        print 'current loop:',ucount
 def exportstatus(tb):
     response = tb.scan(
 
