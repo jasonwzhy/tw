@@ -4,6 +4,7 @@ import boto3
 import json
 from boto3.dynamodb.conditions import Key, Attr
 import sys
+import time
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -31,10 +32,11 @@ def DyDBClient():
     ucount = 0
     fp = open('./outputstatus','w+r')
     for itemiterator in response_iterator:
+        time.sleep(5)
         for item in itemiterator['Items']:
             ucount += 1
             dict = {'id':item['id']['N'],'text':item['text']['S'],'userid':item['userid']['N']}
-            fp.writelines(json.dumps(dict,ensure_ascii=False,indent=4))
+            fp.writelines(json.dumps(dict,ensure_ascii=False))
     print ucount
 def exportstatus(tb):
     response = tb.scan(
