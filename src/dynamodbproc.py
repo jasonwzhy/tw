@@ -36,7 +36,7 @@ def DyDBClient():
         for item in itemiterator['Items']:
             ucount += 1
             dict = {'id':item['id']['N'],'text':item['text']['S'],'userid':item['userid']['N']}
-            fp.writelines(json.dumps(dict,ensure_ascii=False))
+            fp.writelines(json.dumps(dict,ensure_ascii=False)+"\n")
     print ucount
 def exportstatus(tb):
     response = tb.scan(
