@@ -53,7 +53,7 @@ def DyDBClientUser():
         time.sleep(5)
         for item in itemiterator['Items']:
             # ucount += 1
-            print item['id'],","
+            print item['id']['N'],",",
             # dict = {'id':item['id']['N'],'text':item['text']['S'],'userid':item['userid']['N']}
             # fp.writelines(json.dumps(dict,ensure_ascii=False)+"\n")
         # print 'current loop:',ucount
