@@ -73,6 +73,7 @@ followlst1 = [698412371170045952, 22967466, 4798538425, 4897578143, 603437170, 7
               421116904, 2393816696, 4797344592, 1099977536, 4882027893, 2520534019, 4579231222, 4647313429, 2258731122,
               203829129, 4800770353, 4866124551, 254894752, 4834762378, 2985447896, 4844100076, 4546104614, 4919891613,
               4821534060, 4803328757, 4812840985, 4542688094, 532013857]
+friendlst=[]
 SeedLst = [203829129, 45358339]
 
 
@@ -161,8 +162,10 @@ def dosync_twee():
                 except Exception, e:
                     print Exception, e
                     continue
-
-        tbrel.putdata(user.show_relids())
+        relmap = user.show_relids()
+        relmap["follows"] += followlst1
+        relmap["friends"] += friendlst
+        tbrel.putdata(relmap)
 
 
 def procstatus(table, api, uid):

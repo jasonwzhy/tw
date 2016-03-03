@@ -129,7 +129,7 @@ class UserObj():
     def _mk_lst(self, slst):
         return [item[self.relKey] for item in slst]
 
-    def show_relids(self, tag):
+    def show_relids(self, tag=0):
         if tag == 1:
             return self.followersidlst
         elif tag == 2:
