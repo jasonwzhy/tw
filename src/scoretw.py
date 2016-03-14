@@ -22,8 +22,7 @@ def IteratorUser():
 
 def UpdateItem(tb,keymap,scorenum):
     # tb = 'Tweestatus'
-    print tb
-    print keymap
+    print tb,' ',keymap,'  ',scorenum
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(tb)
 
