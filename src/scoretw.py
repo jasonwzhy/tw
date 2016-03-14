@@ -107,11 +107,11 @@ def TagScoreToUsers():
             UpdateItem(usertb,{'id':cur_userid},userscore)
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     TagScoreToTwstatus()
     TagScoreToUsers()
 
-if __test__:
+# if __test__:
     # TagScoreToTwstatus()
     # UpdateItem('Music',{'id':1},3)
     # client = boto3.client('dynamodb')
