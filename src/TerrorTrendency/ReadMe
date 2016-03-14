@@ -1,0 +1,29 @@
+一、模型说明
+    1.模型接口文件名：model_base_dict.py
+    2.依赖项文件名：langconv.py、zh_wiki.py
+    3.词典文件：MyDegreeDict.txt、MyKeyDict.txt、MyKeyWeightDict.txt、MyNotDict.txt
+    4.需安装模块：jieba分词
+
+
+二、使用说明
+    1.推文接口函数：getPaperTrendency(self,line)
+          输入参数：每篇推文  
+              类型：字符串  
+                例：{"text":"2012年5月28日在辽宁省沈阳市沈河区人民法院开庭审理我的案件时。公诉人都没有出庭。是沈阳市沈河区人民法院唐本瑜法官自己宣读的起诉书。沈阳市沈河区人民法院公检法一家全包了。我对此提出异议，沈河区人民法院法警就把我的右腿给打断了https://t.co/k5t5RzNZOK","userid":"4833963267","id":"701231669676634112"}
+          输出参数：推文恐怖倾向系数
+              类型：浮点型（0.0~1.0）
+                例：0.40
+
+
+    2.用户接口函数：getPersonTerrorTendency(self,tendencyList)
+          输入参数：每个用户ID所有推文恐怖倾向系数列表
+              类型：list(float),即浮点数的列表
+                例: [0.1,0.2,0.1,0.0,0.4]
+          输出参数：用户ID恐怖倾向系数
+              类型：浮点型（0.0~1.0）
+                例：0.4
+    3.使用方式：
+        from model_base_dict import *
+        obj = TerrorModel()
+        paperTrendency = obj.getPaperTrendency(line)
+        personTrendency = obj.getPersonTerrorTendency(tendencyList)

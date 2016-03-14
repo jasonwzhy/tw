@@ -48,14 +48,14 @@ def DyDBClientUser():
             'id'
         ]
     )
-    fp = open('./outputstatus','w+r')
+    fp = open('./outputuserid','w+r')
     for itemiterator in response_iterator:
-        time.sleep(5)
+        # time.sleep(1)
         for item in itemiterator['Items']:
             # ucount += 1
-            print "%d,"%item['id']['N']
+            # print "%d,"%int(item['id']['N'])
             # dict = {'id':item['id']['N'],'text':item['text']['S'],'userid':item['userid']['N']}
-            # fp.writelines(json.dumps(dict,ensure_ascii=False)+"\n")
+            fp.write(item['id']['N']+u",")
         # print 'current loop:',ucount
 
 def exportstatus(tb):

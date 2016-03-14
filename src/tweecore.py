@@ -5,7 +5,7 @@ import tweepy
 import json
 import time
 
-__DEBUG__ = False
+__DEBUG__ = True
 
 
 class DoAuth(object):
@@ -28,8 +28,7 @@ class DoAuth(object):
 
 def retry(times=1, sleep=10, exceptions=None):
     import time
-    exceptions = exceptions if exceptions is not None else Exception
-
+    # exceptions = exceptions if exceptions is not None else Exception
     def wrapper(func):
         def wrapper(*args, **kwargs):
             last_exception = None
@@ -184,11 +183,11 @@ if __name__ == '__main__':
     auth = doauth.doauth()
     api = doauth.doapi(auth)
 
-    # def testUserObj():
-    # 	user = UserObj(api,2875746901)
-    # 	for page in user.get_followers_page():
-    # 		print "One page followers len:",len(page),"\n\n\n\n\n"
-
+    def testUserObj():
+        user = UserObj(api,2875746901)
+        for page in user.get_followers_page():
+            print "One page followers len:",len(page),"\n\n\n\n\n"
+    testUserObj()
 
     # 	for page in user.get_friends_page():
     # 		print "One page friends len:",len(page),"\n\n\n\n\n"
@@ -246,7 +245,5 @@ if __name__ == '__main__':
     # public_tweets = api.home_timeline()
     # for item in public_tweets:
     # 	print item
-    uobj = UserObj(api, uid=203829129)
-    uobj.get_user_info()
 
     # api.xxx()
