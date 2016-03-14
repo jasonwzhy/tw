@@ -22,6 +22,8 @@ def IteratorUser():
 
 def UpdateItem(tb,keymap,scorenum):
     # tb = 'Tweestatus'
+    print tb
+    print keymap
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(tb)
 
@@ -32,14 +34,6 @@ def UpdateItem(tb,keymap,scorenum):
             ':val1': scorenum
         }
     )
-    # response = table.get_item(
-    # Key={
-    #         'Artist': 'ah00ha',
-    #         'SongTitle':'minigh'
-    #     }
-    # )
-    # item = response['Item']
-    # print item
 
 
 def TagScoreToTwstatus():
@@ -55,7 +49,8 @@ def TagScoreToTwstatus():
         AttributesToGet=[
             'id',
             'text',
-            'userid'
+            'userid',
+            'created_at_ts'
         ]
     )
     for itemiterator in response_iterator:
@@ -65,11 +60,12 @@ def TagScoreToTwstatus():
             # print json.dumps(dict,ensure_ascii=False)
             UpdateItem(
                 tbname,
-                {'id':item['id']['N'],'created_at_ts':item['created_at_ts']['N']},
-                terror.getPaperTrendency(json.dumps(dict,ensure_ascii=False))*10
+                {'id':int(item['id']['N']),'created_at_ts':int(item['created_at_ts']['N'])},
+                int(terror.getPaperTrendency(json.dumps(dict,ensure_ascii=False))*10)
             )
             # print terror.getPaperTrendency(json.dumps(dict,ensure_ascii=False))
         # print 'current loop:',ucount
+
 def TagScoreToUsers():
     usertb = 'TweeUsers'
     statustb = 'Tweestatus'
@@ -102,9 +98,9 @@ def TagScoreToUsers():
             for qstatuslst in qstatresponse_iterator:
                 for userstatus in qstatuslst['Items']:
                     if 'scorev1' in userstatus:
-                        userstatusscorelst.append(userstatus['scorev1']['N'])
+                        userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
             userscore = terror.getPersonTerrorTendency(userstatusscorelst)
-            UpdateItem(usertb,{'id':cur_userid},userscore)
+            UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
 
 if __name__ == "__main__":
