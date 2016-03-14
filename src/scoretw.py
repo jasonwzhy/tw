@@ -5,6 +5,7 @@ import boto3
 import json
 from boto3.dynamodb.conditions import Key, Attr
 import sys
+import time
 reload(sys)
 sys.setdefaultencoding('utf8')
 import decimal
@@ -25,7 +26,7 @@ def UpdateItem(tb,keymap,scorenum):
     print tb,' ',keymap,'  ',scorenum
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(tb)
-
+    time.sleep(0.2)
     table.update_item(
         Key=keymap,
         UpdateExpression='SET scorev1 = :val1',
