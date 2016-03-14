@@ -107,46 +107,49 @@ def TagScoreToUsers():
             UpdateItem(usertb,{'id':cur_userid},userscore)
 
 
+if __name__ = "__main__":
+    TagScoreToTwstatus()
+    TagScoreToUsers()
 
 if __test__:
     # TagScoreToTwstatus()
     # UpdateItem('Music',{'id':1},3)
-    client = boto3.client('dynamodb')
-    paginatorqstat = client.get_paginator('scan')
-    qstatresponse_iterator = paginatorqstat.paginate(
-        Select='SPECIFIC_ATTRIBUTES',
-        TableName='Tweestatus',
-        # AttributesToGet=[
-        #     'id'
-        # ],
-        ProjectionExpression = 'id,userid',
-        # KeyConditionExpression='id=:id AND created_at_ts=:ts',
-        # ScanFilter={
-        #     'userid':{
-        #         'AttributeValueList':[
-        #             {
-        #                 'N':'3033102862'
-        #             }
-        #         ],
-        #         'ComparisonOperator':'EQ'
-        #     }
-        # },
-        FilterExpression='userid=:uid',
-        ExpressionAttributeValues={
-            ':uid':{
-                'N':'3033102862'
-            }
-        },
-        # ExpressionAttributeNames={
-        #     '#uid':'userid'
-        # }
-
-        # KeyConditionExpression='userid = :partitionkeyval',
-        # FilterExpression='userid = 3033102862',
-        # ExpressionAttributeNames={
-        #     'partitionkeyval':3033102862
-        # }
-    )
-    for items in qstatresponse_iterator:
-        for i in items['Items']:
-            print i
+    # client = boto3.client('dynamodb')
+    # paginatorqstat = client.get_paginator('scan')
+    # qstatresponse_iterator = paginatorqstat.paginate(
+    #     Select='SPECIFIC_ATTRIBUTES',
+    #     TableName='Tweestatus',
+    #     # AttributesToGet=[
+    #     #     'id'
+    #     # ],
+    #     ProjectionExpression = 'id,userid',
+    #     # KeyConditionExpression='id=:id AND created_at_ts=:ts',
+    #     # ScanFilter={
+    #     #     'userid':{
+    #     #         'AttributeValueList':[
+    #     #             {
+    #     #                 'N':'3033102862'
+    #     #             }
+    #     #         ],
+    #     #         'ComparisonOperator':'EQ'
+    #     #     }
+    #     # },
+    #     FilterExpression='userid=:uid',
+    #     ExpressionAttributeValues={
+    #         ':uid':{
+    #             'N':'3033102862'
+    #         }
+    #     },
+    #     # ExpressionAttributeNames={
+    #     #     '#uid':'userid'
+    #     # }
+    #
+    #     # KeyConditionExpression='userid = :partitionkeyval',
+    #     # FilterExpression='userid = 3033102862',
+    #     # ExpressionAttributeNames={
+    #     #     'partitionkeyval':3033102862
+    #     # }
+    # )
+    # for items in qstatresponse_iterator:
+    #     for i in items['Items']:
+    #         print i
