@@ -73,7 +73,7 @@ def TagScoreToUsers():
     client = boto3.client('dynamodb')
     #scan user return userid
     paginator = client.get_paginator('scan')
-    paginatorqstat = client.get_paginator('query')
+    paginatorqstat = client.get_paginator('scan')
     response_iterator = paginator.paginate(
         Select='SPECIFIC_ATTRIBUTES',
         TableName=usertb,
@@ -104,7 +104,7 @@ def TagScoreToUsers():
 
 
 if __name__ == "__main__":
-    TagScoreToTwstatus()
+    # TagScoreToTwstatus()
     TagScoreToUsers()
 
 # if __test__:
