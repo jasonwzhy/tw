@@ -89,25 +89,44 @@ def TagScoreToUsers():
             if cur_statcount != '0':
                 userstatusscorelst = []
                 # query user`s status by userid
-                qstatresponse_iterator = paginatorqstat.paginate(
+                qstatresponse = client.scan(
                     Select='SPECIFIC_ATTRIBUTES',
                     TableName=statustb,
                     IndexName=statustbindex,
-                    ProjectionExpression = 'id',
+                    Limit=200,
+                    ProjectionExpression = 'id,scorev1',
                     FilterExpression='userid=:uid',
                     ExpressionAttributeValues={
                         ':uid':{
                             'N':cur_userid
                         }
                     }
+
                 )
-                for qstatuslst in qstatresponse_iterator:
-                    for userstatus in qstatuslst['Items']:
-                        print userstatus['id']
-                        if 'scorev1' in userstatus:
-                            userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
+                # qstatresponse_iterator = paginatorqstat.paginate(
+                #     Select='SPECIFIC_ATTRIBUTES',
+                #     TableName=statustb,
+                #     IndexName=statustbindex
+                #     ProjectionExpression = 'id,scorev1',
+                #     FilterExpression='userid=:uid',
+                #     ExpressionAttributeValues={
+                #         ':uid':{
+                #             'N':cur_userid
+                #         }
+                #     }
+                # )
+                # for qstatuslst in qstatresponse_iterator:
+                #     for userstatus in qstatuslst['Items']:
+                #         print userstatus['id']
+                #         if 'scorev1' in userstatus:
+                #             userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
+                for curstatus in qstatresponse['Items']:
+                    if 'scorev1' in curstatus:
+                        userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
                 if userstatusscorelst == []:
                     userstatusscorelst.append(0)
+                print '[userstatusscorelst len]', len(userstatusscorelst)
+                print '---------------------------------'
                 userscore = terror.getPersonTerrorTendency(userstatusscorelst)
                 UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
