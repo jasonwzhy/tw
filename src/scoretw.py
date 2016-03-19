@@ -87,8 +87,8 @@ def TagScoreToUsers():
             print '---------------------------------'
             print '[current userid] ',cur_userid
             print '[current statcount]',cur_statcount
-            time.sleep(3)
             if cur_statcount != 0:
+                time.sleep(5)
                 userstatusscorelst = []
                 # query user`s status by userid
                 # qstatresponse = client.scan(
