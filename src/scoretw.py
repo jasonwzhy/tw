@@ -125,7 +125,10 @@ def TagScoreToUsers():
                         userstatusscorelst.append(float(curstatus['scorev1']['N'])/10.0)
                 print '[userstatusscorelst len]', len(userstatusscorelst)
                 print '---------------------------------'
-                userscore = terror.getPersonTerrorTendency(userstatusscorelst)
+                if len(userstatusscorelst) == 0:
+                    userscore = 0
+                else:
+                    userscore = terror.getPersonTerrorTendency(userstatusscorelst)
                 UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
 
