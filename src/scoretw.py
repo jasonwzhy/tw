@@ -69,6 +69,7 @@ def TagScoreToTwstatus():
 def TagScoreToUsers():
     usertb = 'TweeUsers'
     statustb = 'Tweestatus'
+    statustbindex = 'userid-index'
     terror = TerrorModel()
     client = boto3.client('dynamodb')
     #scan user return userid
@@ -77,34 +78,38 @@ def TagScoreToUsers():
     response_iterator = paginator.paginate(
         Select='SPECIFIC_ATTRIBUTES',
         TableName=usertb,
-        ProjectionExpression = 'id',
+        ProjectionExpression = 'id,statuses_count',
     )
     for itemiterator in response_iterator:
         for item in itemiterator['Items']:
             cur_userid = item['id']['N']
+            cur_statcount = item['statuses_count']['N']
             print '[current userid] ',cur_userid
-            userstatusscorelst = []
-            # query user`s status by userid
-            qstatresponse_iterator = paginatorqstat.paginate(
-                Select='SPECIFIC_ATTRIBUTES',
-                TableName=statustb,
-                ProjectionExpression = 'id',
-                FilterExpression='userid=:uid',
-                ExpressionAttributeValues={
-                    ':uid':{
-                        'N':cur_userid
+            print '[current statcount]',cur_statcount
+            if cur_statcount != '0':
+                userstatusscorelst = []
+                # query user`s status by userid
+                qstatresponse_iterator = paginatorqstat.paginate(
+                    Select='SPECIFIC_ATTRIBUTES',
+                    TableName=statustb,
+                    IndexName=statustbindex,
+                    ProjectionExpression = 'id',
+                    FilterExpression='userid=:uid',
+                    ExpressionAttributeValues={
+                        ':uid':{
+                            'N':cur_userid
+                        }
                     }
-                }
-            )
-            for qstatuslst in qstatresponse_iterator:
-                for userstatus in qstatuslst['Items']:
-                    print userstatus['id']
-                    if 'scorev1' in userstatus:
-                        userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
-            if userstatusscorelst == []:
-                userstatusscorelst.append(0)
-            userscore = terror.getPersonTerrorTendency(userstatusscorelst)
-            UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
+                )
+                for qstatuslst in qstatresponse_iterator:
+                    for userstatus in qstatuslst['Items']:
+                        print userstatus['id']
+                        if 'scorev1' in userstatus:
+                            userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
+                if userstatusscorelst == []:
+                    userstatusscorelst.append(0)
+                userscore = terror.getPersonTerrorTendency(userstatusscorelst)
+                UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
 
 if __name__ == "__main__":
