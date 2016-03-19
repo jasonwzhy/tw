@@ -123,8 +123,6 @@ def TagScoreToUsers():
                 for curstatus in qstatresponse['Items']:
                     if 'scorev1' in curstatus:
                         userstatusscorelst.append(float(curstatus['scorev1']['N'])/10.0)
-                if userstatusscorelst == []:
-                    userstatusscorelst.append(0)
                 print '[userstatusscorelst len]', len(userstatusscorelst)
                 print '---------------------------------'
                 userscore = terror.getPersonTerrorTendency(userstatusscorelst)
