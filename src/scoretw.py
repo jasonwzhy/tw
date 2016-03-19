@@ -84,29 +84,20 @@ def TagScoreToUsers():
         for item in itemiterator['Items']:
             cur_userid = item['id']['N']
             cur_statcount = item['statuses_count']['N']
+            print '---------------------------------'
             print '[current userid] ',cur_userid
             print '[current statcount]',cur_statcount
+            time.sleep(3)
             if cur_statcount != '0':
                 userstatusscorelst = []
                 # query user`s status by userid
-                qstatresponse = client.scan(
-                    Select='SPECIFIC_ATTRIBUTES',
-                    TableName=statustb,
-                    # IndexName=statustbindex,
-                    Limit=200,
-                    ProjectionExpression = 'id,scorev1',
-                    FilterExpression='userid=:uid',
-                    ExpressionAttributeValues={
-                        ':uid':{
-                            'N':cur_userid
-                        }
-                    }
-
-                )
-                # qstatresponse_iterator = paginatorqstat.paginate(
+                # qstatresponse = client.scan(
                 #     Select='SPECIFIC_ATTRIBUTES',
                 #     TableName=statustb,
-                #     IndexName=statustbindex
+                #     IndexName=statustbindex,
+                #     # Limit=3,
+                #     # TotalSegments=2,
+                #     # Segment=1,
                 #     ProjectionExpression = 'id,scorev1',
                 #     FilterExpression='userid=:uid',
                 #     ExpressionAttributeValues={
@@ -115,16 +106,33 @@ def TagScoreToUsers():
                 #         }
                 #     }
                 # )
-                # for qstatuslst in qstatresponse_iterator:
-                #     for userstatus in qstatuslst['Items']:
-                #         print userstatus['id']
-                #         if 'scorev1' in userstatus:
-                #             userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
-                for curstatus in qstatresponse['Items']:
-                    if 'scorev1' in curstatus:
-                        userstatusscorelst.append(float(curstatus['scorev1']['N'])/10.0)
+                qstatresponse_iterator = paginatorqstat.paginate(
+                    Select='SPECIFIC_ATTRIBUTES',
+                    TableName=statustb,
+                    IndexName=statustbindex,
+                    ProjectionExpression = 'id,scorev1',
+                    FilterExpression='userid=:uid',
+                    ExpressionAttributeValues={
+                        ':uid':{
+                            'N':cur_userid
+                        }
+                    },
+                    PaginationConfig={
+                        'MaxItems': cur_statcount,
+                        'PageSize': 1,
+                        # 'StartingToken': 'string'
+                    }
+                )
+                for qstatuslst in qstatresponse_iterator:
+                    for userstatus in qstatuslst['Items']:
+                        print userstatus
+                        if 'scorev1' in userstatus:
+                            userstatusscorelst.append(float(userstatus['scorev1']['N'])/10.0)
+                # print qstatresponse
+                # for curstatus in qstatresponse['Items']:
+                #     if 'scorev1' in curstatus:
+                #         userstatusscorelst.append(float(curstatus['scorev1']['N'])/10.0)
                 print '[userstatusscorelst len]', len(userstatusscorelst)
-                print '---------------------------------'
                 if len(userstatusscorelst) == 0:
                     userscore = 0
                 else:
