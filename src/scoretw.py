@@ -83,12 +83,12 @@ def TagScoreToUsers():
     for itemiterator in response_iterator:
         for item in itemiterator['Items']:
             cur_userid = item['id']['N']
-            cur_statcount = item['statuses_count']['N']
+            cur_statcount = int(item['statuses_count']['N'])
             print '---------------------------------'
             print '[current userid] ',cur_userid
             print '[current statcount]',cur_statcount
             time.sleep(3)
-            if cur_statcount != '0':
+            if cur_statcount != 0:
                 userstatusscorelst = []
                 # query user`s status by userid
                 # qstatresponse = client.scan(
@@ -106,6 +106,11 @@ def TagScoreToUsers():
                 #         }
                 #     }
                 # )
+                if cur_statcount > 100:
+                    cur_statcount = 100
+                else :
+                    cur_statcount = cur_statcount/2
+
                 qstatresponse_iterator = paginatorqstat.paginate(
                     Select='SPECIFIC_ATTRIBUTES',
                     TableName=statustb,
