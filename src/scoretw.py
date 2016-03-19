@@ -122,7 +122,7 @@ def TagScoreToUsers():
                 #             userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
                 for curstatus in qstatresponse['Items']:
                     if 'scorev1' in curstatus:
-                        userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
+                        userstatusscorelst.append(curstatus['scorev1']['N']/10.0)
                 if userstatusscorelst == []:
                     userstatusscorelst.append(0)
                 print '[userstatusscorelst len]', len(userstatusscorelst)
