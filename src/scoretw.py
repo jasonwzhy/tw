@@ -144,11 +144,40 @@ def TagScoreToUsers():
                     userscore = terror.getPersonTerrorTendency(userstatusscorelst)
                 UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
+def TagScoreToUsersv2():
+    hightscore = {}
+    usertb = 'TweeUsers'
+    tbname = 'Tweestatus'
+    client = boto3.client('dynamodb')
+    paginator = client.get_paginator('scan')
+
+    response_iterator = paginator.paginate(
+        Select='SPECIFIC_ATTRIBUTES',
+        TableName=tbname,
+        AttributesToGet=[
+            'id',
+            'userid',
+            'scorev1',
+        ]
+    )
+    for itemiterator in response_iterator:
+        # time.sleep(1)
+        for item in itemiterator['Items']:
+            userid =str(item['userid']['N'])
+            score =int(item['scorev1']['N'])
+            print userid,score
+            if score>5:
+                if userid in hightscore and hightscore[userid] > score:
+                    pass
+                else:
+                    hightscore[userid] = score
+                    UpdateItem(usertb,{'id':int(userid)},score)
+
 
 if __name__ == "__main__":
     # TagScoreToTwstatus()
-    TagScoreToUsers()
-
+    # TagScoreToUsers()
+    TagScoreToUsersv2()
 # if __test__:
     # TagScoreToTwstatus()
     # UpdateItem('Music',{'id':1},3)
