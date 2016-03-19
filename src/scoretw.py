@@ -92,7 +92,7 @@ def TagScoreToUsers():
                 qstatresponse = client.scan(
                     Select='SPECIFIC_ATTRIBUTES',
                     TableName=statustb,
-                    IndexName=statustbindex,
+                    # IndexName=statustbindex,
                     Limit=200,
                     ProjectionExpression = 'id,scorev1',
                     FilterExpression='userid=:uid',
