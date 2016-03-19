@@ -82,6 +82,7 @@ def TagScoreToUsers():
     for itemiterator in response_iterator:
         for item in itemiterator['Items']:
             cur_userid = item['id']['N']
+            print '[current userid] ',cur_userid
             userstatusscorelst = []
             # query user`s status by userid
             qstatresponse_iterator = paginatorqstat.paginate(
