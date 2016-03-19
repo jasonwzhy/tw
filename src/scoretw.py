@@ -97,8 +97,11 @@ def TagScoreToUsers():
             )
             for qstatuslst in qstatresponse_iterator:
                 for userstatus in qstatuslst['Items']:
+                    print userstatus['id']
                     if 'scorev1' in userstatus:
                         userstatusscorelst.append(userstatus['scorev1']['N']/10.0)
+            if userstatusscorelst == []:
+                userstatusscorelst.append(0)
             userscore = terror.getPersonTerrorTendency(userstatusscorelst)
             UpdateItem(usertb,{'id':int(cur_userid)},int(userscore*10))
 
